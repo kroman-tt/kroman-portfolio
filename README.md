@@ -36,6 +36,8 @@ These are personal demo projects created to demonstrate frontend development ski
 kroman-portfolio/
 ├── index.html
 ├── README.md
+├── assets/
+│   └── kroman.jpg
 └── demos/
     ├── restaurant/
     │   └── index.html
@@ -47,7 +49,7 @@ kroman-portfolio/
 
 ## Contact
 
-- **Name:** Kroman
-- **Email:** [kromanbhandari19@gmail.com](mailto:kromanbhandari19@gmail.com)
-- **WhatsApp:** +977 9763411886
-- **Message me on WhatsApp:** [https://wa.me/9779763411886](https://wa.me/9779763411886)
+Kroman  
+kromanbhandari19@gmail.com  
++977 9763411886  
+https://wa.me/9779763411886
