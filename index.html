@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kroman | Freelance Web Developer for Website Fixes</title>
+<meta name="description" content="Kroman is a freelance web developer who fixes HTML, CSS, JavaScript, React and Next.js bugs, mobile layout problems and messy landing pages.">
+<meta name="theme-color" content="#F5F7FA">
+<meta property="og:title" content="Kroman | Freelance Web Developer for Website Fixes">
+<meta property="og:description" content="Kroman provides bug fixes, mobile responsiveness and UI cleanup for small businesses, startups and agencies.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  EDIT BEFORE DEPLOY:
+  1. Replace kromanbhandari19@gmail.com (search the file) with your real email.
+  2. Change "Kroman" if you want a different name or brand.
+  3. Update the prices in the Pricing section to what you really charge.
+-->
+<style>
+:root{
+  --bg:#F5F7FA; --surface:#fff; --ink:#18243A; --muted:#55627A; --line:#D9DFEA;
+  --brand:#2B59E8; --brand-dark:#1F43B8; --bad:#C93C3C; --good:#17855C;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,6vw,4rem)}
+h2{font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:.6rem}
+h3{font-size:1.2rem;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+.lead{color:var(--muted);max-width:60ch}
+.btn{display:inline-block;padding:.8rem 1.3rem;border-radius:10px;font-weight:600;text-decoration:none;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;font:inherit;font-weight:600}
+.btn:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn.ghost:hover{background:#E6ECFD}
+header{position:sticky;top:0;z-index:10;background:rgba(245,247,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--ink);text-decoration:none}
+nav{display:flex;align-items:center;gap:22px}
+nav a{color:var(--ink);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--brand)}
+nav .btn{color:#fff;padding:.5rem 1rem}
+nav .btn:hover{color:#fff}
+/* Hero */
+.hero{padding:64px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero .lead{margin:20px 0 28px;font-size:1.15rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 12px 32px rgba(24,36,58,.08)}
+.mock-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);background:#EDF1F7;font-size:.9rem;font-weight:500}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:0;background:transparent;padding:.35rem .8rem;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.mock-body{padding:20px;overflow:hidden}
+.plan{border:1px solid var(--line);border-radius:12px;padding:20px;max-width:100%}
+.plan b{font-family:var(--display);font-size:1.3rem}
+.price{font-family:var(--display);font-size:2rem;font-weight:700;margin:6px 0 10px}
+.plan ul{margin:0 0 16px;padding:0;list-style:none}
+.plan li{padding:4px 0}
+.plan .buy{display:block;width:100%;text-align:center;padding:.7rem;border-radius:8px;border:0;background:var(--brand);color:#fff;font:inherit;font-weight:600}
+.mock.is-broken .plan{width:125%;padding:20px 20px 20px 14px}
+.mock.is-broken .plan b{white-space:nowrap}
+.mock.is-broken .plan li{color:#B9C0CC;margin-left:-6px;white-space:nowrap}
+.mock.is-broken .price{font-size:2.6rem;margin-left:8px}
+.mock.is-broken .buy{width:112%;background:#C9D6FB;color:#fff}
+.mock-note{padding:12px 20px 18px;font-size:.95rem;color:var(--muted);border-top:1px solid var(--line)}
+.mock-note strong{color:var(--ink)}
+.is-broken .mock-note .bad{display:inline}.is-broken .mock-note .good{display:none}
+.mock:not(.is-broken) .mock-note .bad{display:none}.mock:not(.is-broken) .mock-note .good{display:inline}
+/* Services */
+.services-list{margin-top:32px;border-top:1px solid var(--ink)}
+.svc{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+.svc p{color:var(--muted)}
+/* Demos */
+.demos{background:var(--surface);border-block:1px solid var(--line)}
+.demo-note{display:inline-block;margin-top:14px;padding:.4rem .8rem;border-radius:8px;background:#FFF4D6;color:#5C4400;font-size:.95rem}
+.demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.demo{border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:14px;background:var(--bg)}
+.badge{align-self:flex-start;font-size:.8rem;font-weight:600;padding:.15rem .6rem;border-radius:99px;background:var(--ink);color:#fff}
+.demo h3{margin-top:2px}
+.demo-description{color:var(--muted);font-size:.98rem}
+.demo-features{margin:0;padding-left:1.1rem;color:var(--muted);font-size:.98rem}
+.demo-features li{padding:2px 0}
+.demo-features-title{font-weight:600;font-size:.95rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tag{padding:.2rem .55rem;border:1px solid var(--line);border-radius:99px;background:var(--surface);font-size:.85rem;font-weight:500;color:var(--muted)}
+.demo .btn{align-self:flex-start;margin-top:4px}
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.tier.main{border:2px solid var(--brand)}
+.tier .amt{font-family:var(--display);font-size:2rem;font-weight:700}
+.tier .amt small{font-size:1rem;font-weight:500;color:var(--muted)}
+.tier ul{margin:4px 0 0;padding-left:1.1rem;color:var(--muted)}
+.fine{margin-top:16px;color:var(--muted);font-size:.95rem}
+/* Why */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 48px;margin-top:28px}
+.why-grid div{padding:14px 0;border-top:1px solid var(--line)}
+.why-grid h3{margin-bottom:4px}
+.why-grid p{color:var(--muted)}
+/* Contact */
+.contact{background:var(--ink);color:#fff}
+.contact h2{color:#fff}
+.contact .lead{color:#C9D2E3}
+.contact .btn{background:#fff;color:var(--ink);border-color:#fff;margin-top:24px}
+.contact .btn:hover{background:#E6ECFD;border-color:#E6ECFD}
+.contact ul{margin:20px 0 0;padding-left:1.1rem;color:#C9D2E3}
+.contact a:not(.btn){color:#fff}
+footer{padding:24px 0;color:var(--muted);font-size:.95rem}
+@media (max-width:860px){
+  .hero-grid,.demo-grid,.price-grid,.why-grid,.svc{grid-template-columns:1fr}
+  .svc{gap:6px}
+  nav a:not(.btn){display:none}
+  section{padding:56px 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Kroman</a>
+    <nav aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#demos">Demos</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="btn">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Your website has a problem. I fix it.</h1>
+      <p class="lead">I'm a freelance web developer. I fix HTML, CSS, JavaScript, React and Next.js bugs, broken mobile layouts and messy landing pages, so your site works the way it should.</p>
+      <div class="cta-row">
+        <a class="btn" href="#contact">Send me the bug</a>
+        <a class="btn ghost" href="#pricing">See pricing</a>
+      </div>
+    </div>
+    <div class="mock is-broken" id="mock" aria-label="Before and after example of a mobile layout fix">
+      <div class="mock-bar">
+        <span>Pricing card on a phone</span>
+        <div class="seg" role="group" aria-label="Show before or after the fix">
+          <button type="button" data-state="broken" aria-pressed="true">Before</button>
+          <button type="button" data-state="fixed" aria-pressed="false">After</button>
+        </div>
+      </div>
+      <div class="mock-body">
+        <div class="plan">
+          <b>Starter plan</b>
+          <div class="price">$19/mo</div>
+          <ul><li>Up to 3 projects</li><li>Email support</li><li>Cancel any time</li></ul>
+          <button class="buy" type="button" tabindex="-1">Start free trial</button>
+        </div>
+      </div>
+      <p class="mock-note">
+        <span class="bad"><strong>Before:</strong> the card is wider than the screen, the button is cut off and the text is hard to read.</span>
+        <span class="good"><strong>After:</strong> the card fits any width and the button and text have clear contrast.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>What I fix</h2>
+    <p class="lead">Small, clear jobs with a quote before I start.</p>
+    <div class="services-list">
+      <div class="svc"><h3>HTML, CSS and JavaScript bug fixing</h3><p>Broken buttons, forms that don't submit, layouts that jump, scripts that throw errors.</p></div>
+      <div class="svc"><h3>React and Next.js bug fixing</h3><p>State and rendering bugs, routing problems, hydration warnings, components that behave differently than expected.</p></div>
+      <div class="svc"><h3>Mobile responsiveness fixes</h3><p>Overflowing content, tiny tap targets, menus that break on phones and tablets.</p></div>
+      <div class="svc"><h3>Landing page improvements</h3><p>Clearer hero and calls to action, better spacing and readability, faster-feeling pages.</p></div>
+      <div class="svc"><h3>Website UI cleanup</h3><p>Consistent spacing, type and colors so the site looks finished and professional.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="demos" id="demos">
+  <div class="wrap">
+    <h2>Demo projects</h2>
+    <p class="lead">Examples of the kind of problems I fix and how I describe the fix.</p>
+    <p class="demo-note"><strong>These are demo projects I created to demonstrate my frontend development skills. They are not client projects.</strong></p>
+    <div class="demo-grid">
+      <article class="demo">
+        <span class="badge">DEMO</span>
+        <h3>Restaurant Landing Page</h3>
+        <p class="demo-description">A modern restaurant website focused on clear menus, location information and easy contact on both desktop and mobile.</p>
+        <div>
+          <p class="demo-features-title">Features</p>
+          <ul class="demo-features">
+            <li>Responsive navigation</li>
+            <li>Menu / food section</li>
+            <li>Location and opening hours</li>
+            <li>Contact / reservation CTA</li>
+            <li>Mobile-friendly layout</li>
+          </ul>
+        </div>
+        <p class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></p>
+        <a class="btn ghost" href="#">View Demo</a>
+      </article>
+      <article class="demo">
+        <span class="badge">DEMO</span>
+        <h3>SaaS Product Landing Page</h3>
+        <p class="demo-description">A clean SaaS landing page designed to explain a product quickly and guide visitors toward a signup or demo.</p>
+        <div>
+          <p class="demo-features-title">Features</p>
+          <ul class="demo-features">
+            <li>Hero section</li>
+            <li>Product features</li>
+            <li>Pricing section</li>
+            <li>Strong CTA</li>
+            <li>Responsive design</li>
+          </ul>
+        </div>
+        <p class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></p>
+        <a class="btn ghost" href="#">View Demo</a>
+      </article>
+      <article class="demo">
+        <span class="badge">DEMO</span>
+        <h3>Local Gym Website</h3>
+        <p class="demo-description">A professional local business website designed to help visitors understand the service, build trust and contact the business.</p>
+        <div>
+          <p class="demo-features-title">Features</p>
+          <ul class="demo-features">
+            <li>Services section</li>
+            <li>About / business information</li>
+            <li>Testimonials or trust section</li>
+            <li>Contact CTA</li>
+            <li>Mobile-friendly layout</li>
+          </ul>
+        </div>
+        <p class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></p>
+        <a class="btn ghost" href="#">View Demo</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Simple pricing</h2>
+    <p class="lead">Fixed prices for most jobs. You approve the quote before any work begins.</p>
+    <div class="price-grid">
+      <div class="tier">
+        <h3>Quick fix</h3>
+        <div class="amt">From $30</div>
+        <p>One clear bug or layout issue.</p>
+        <ul><li>Fix and short written summary</li><li>One round of follow-up</li></ul>
+      </div>
+      <div class="tier main">
+        <h3>Page cleanup</h3>
+        <div class="amt">From $90</div>
+        <p>A page or section that needs several fixes.</p>
+        <ul><li>Mobile and desktop fixes</li><li>UI cleanup</li><li>Two rounds of follow-up</li></ul>
+      </div>
+      <div class="tier">
+        <h3>Bigger job</h3>
+        <div class="amt">Custom <small>quote</small></div>
+        <p>Several pages, or ongoing help for a team.</p>
+        <ul><li>I review the code first</li><li>You get a quote and timeline</li></ul>
+      </div>
+    </div>
+    <p class="fine">Prices are starting points and depend on the size of the problem. Every job gets a quote first.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Why work with me</h2>
+    <div class="why-grid">
+      <div><h3>Quote first</h3><p>You know the price and scope before I start.</p></div>
+      <div><h3>Clear explanations</h3><p>I send a short summary of what was wrong and what I changed.</p></div>
+      <div><h3>Small, safe changes</h3><p>I fix the problem without rewriting code that already works.</p></div>
+      <div><h3>Easy to work with</h3><p>Developers and agencies can send me a repo or a ticket. Business owners can just describe what looks wrong.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Send me the bug</h2>
+    <p class="lead">Tell me what's broken and I'll reply with a quote and timeline.</p>
+    <ul>
+      <li>A link to the site or repo</li>
+      <li>What is wrong, and on which device or browser</li>
+      <li>A screenshot, if you have one</li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn" href="mailto:kromanbhandari19@gmail.com?subject=Website%20fix%20request&amp;body=Link%20to%20site%20or%20repo%3A%0AWhat%27s%20broken%3A%0ADevice%20%2F%20browser%3A">Email me</a>
+      <a class="btn" href="https://wa.me/9779763411886">Message me on WhatsApp</a>
+    </div>
+    <p class="fine" style="color:#C9D2E3">Or write to <a href="mailto:kromanbhandari19@gmail.com">kromanbhandari19@gmail.com</a></p>
+    <p class="fine" style="color:#C9D2E3">Call me at <a href="tel:+9779763411886">+977 9763411886</a></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; <span id="yr">2026</span> Kroman. Freelance web developer.</div>
+</footer>
+
+<script>
+(function(){
+  var mock=document.getElementById('mock');
+  var btns=mock.querySelectorAll('.seg button');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var broken=b.getAttribute('data-state')==='broken';
+      mock.classList.toggle('is-broken',broken);
+      btns.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+    });
+  });
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
