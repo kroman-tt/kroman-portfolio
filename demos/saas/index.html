@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FlowPilot is a fictional workspace for planning projects, aligning teams and turning priorities into progress.">
+  <title>FlowPilot | Plan better. Ship together.</title>
+  <style>
+    :root {
+      --ink: #14213d;
+      --muted: #64718b;
+      --paper: #f7f9fc;
+      --surface: #fff;
+      --line: #e4e9f2;
+      --brand: #6758e8;
+      --brand-dark: #5142ce;
+      --accent: #16b89a;
+      --shadow: 0 20px 55px rgba(35, 48, 87, .11);
+      --display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.6 var(--body); }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid #9b92ff; outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 12px; color: var(--brand); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1, h2, h3 { margin: 0; font-family: var(--display); line-height: 1.12; letter-spacing: -.035em; }
+    h1 { max-width: 760px; font-size: clamp(2.75rem, 7vw, 5.3rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3.35rem); }
+    h3 { font-size: 1.2rem; }
+    p { margin: 0; }
+    .section { padding: 98px 0; }
+    .section-head { max-width: 610px; }
+    .section-head > p:not(.eyebrow) { margin-top: 15px; color: var(--muted); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 18px; border: 1px solid var(--brand); border-radius: 8px; background: var(--brand); color: #fff; font: inherit; font-size: .92rem; font-weight: 750; text-decoration: none; transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+    .btn:hover { background: var(--brand-dark); box-shadow: 0 8px 20px rgba(103,88,232,.2); transform: translateY(-2px); }
+    .btn.secondary { border-color: var(--line); background: var(--surface); color: var(--ink); }
+    .btn.secondary:hover { border-color: #cbd3e4; background: #fff; }
+
+    header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(228,233,242,.85); background: rgba(247,249,252,.94); backdrop-filter: blur(12px); }
+    .nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 76px; gap: 25px; }
+    .logo { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: 1.25rem; font-weight: 800; letter-spacing: -.04em; text-decoration: none; }
+    .logo-mark { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 8px; background: var(--brand); color: #fff; font-size: .85rem; }
+    .nav-toggle { display: none; border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 7px; }
+    .nav-toggle svg { width: 25px; height: 25px; }
+    nav { display: flex; align-items: center; gap: 27px; }
+    nav a { color: var(--muted); font-size: .9rem; text-decoration: none; transition: color .2s ease; }
+    nav a:hover { color: var(--brand); }
+    nav .btn { color: #fff; font-size: .88rem; }
+
+    .hero { padding: 92px 0 84px; overflow: hidden; background: radial-gradient(circle at 80% 10%, rgba(166,156,255,.23), transparent 33%), linear-gradient(180deg, #f7f9fc 0%, #eef1ff 100%); }
+    .hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
+    .hero-copy { margin: 22px 0 28px; max-width: 560px; color: var(--muted); font-size: 1.12rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+    .hero-note { margin-top: 19px; color: #8993a8; font-size: .8rem; }
+    .dashboard-preview { position: relative; padding: 12px; border: 1px solid rgba(103,88,232,.2); border-radius: 15px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); transform: rotate(1.2deg); }
+    .preview-window { overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+    .window-bar { display: flex; align-items: center; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: #fcfdff; }
+    .window-dot { width: 7px; height: 7px; border-radius: 50%; background: #d6dceb; }
+    .preview-body { display: grid; grid-template-columns: 132px 1fr; min-height: 315px; }
+    .preview-side { padding: 18px 12px; background: #f6f7fd; }
+    .preview-side strong { display: block; margin-bottom: 22px; color: var(--brand); font-size: .8rem; }
+    .side-line { height: 8px; margin: 14px 6px; border-radius: 99px; background: #dce1f0; }
+    .side-line.active { width: 75%; background: #b7b0ff; }
+    .preview-main { padding: 20px; }
+    .preview-top { display: flex; justify-content: space-between; gap: 12px; }
+    .mini-title { width: 130px; height: 12px; border-radius: 99px; background: var(--ink); }
+    .mini-button { width: 68px; height: 24px; border-radius: 5px; background: var(--brand); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 23px; }
+    .stat { padding: 11px; border: 1px solid var(--line); border-radius: 7px; }
+    .stat small { display: block; color: var(--muted); font-size: .62rem; }
+    .stat b { display: block; margin-top: 3px; font-size: 1.05rem; }
+    .chart { position: relative; height: 125px; margin-top: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 7px; }
+    .chart-lines { position: absolute; inset: 14px; display: flex; align-items: end; gap: 8px; }
+    .bar { flex: 1; border-radius: 4px 4px 0 0; background: #c9c4ff; }
+    .bar:nth-child(1) { height: 35%; }.bar:nth-child(2) { height: 52%; }.bar:nth-child(3) { height: 43%; }.bar:nth-child(4) { height: 68%; }.bar:nth-child(5) { height: 60%; }.bar:nth-child(6) { height: 82%; }.bar:nth-child(7) { height: 92%; background: var(--brand); }
+
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 45px; }
+    .feature { padding: 25px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); transition: transform .2s ease, box-shadow .2s ease; }
+    .feature:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .feature-icon { width: 42px; height: 42px; display: grid; place-items: center; margin-bottom: 19px; border-radius: 11px; background: #eeecff; color: var(--brand); font-weight: 800; }
+    .feature p { margin-top: 9px; color: var(--muted); font-size: .91rem; }
+
+    .steps-section { background: var(--ink); color: #fff; }
+    .steps-section .section-head > p:not(.eyebrow) { color: #b9c3d8; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 45px; }
+    .step { position: relative; padding-top: 22px; border-top: 1px solid #394663; }
+    .step-number { color: #9d94ff; font-size: .85rem; font-weight: 800; letter-spacing: .1em; }
+    .step h3 { margin-top: 22px; }
+    .step p { margin-top: 10px; color: #b9c3d8; font-size: .92rem; }
+
+    .showcase { background: #eef1ff; }
+    .showcase-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 55px; align-items: center; }
+    .showcase-copy > p:not(.eyebrow) { margin-top: 18px; color: var(--muted); }
+    .showcase-list { display: grid; gap: 13px; margin: 25px 0 0; padding: 0; list-style: none; }
+    .showcase-list li { display: flex; gap: 10px; align-items: start; font-size: .93rem; }
+    .showcase-list li::before { content: "✓"; color: var(--accent); font-weight: 800; }
+    .mock-app { padding: 12px; border: 1px solid #d6daf4; border-radius: 13px; background: rgba(255,255,255,.8); box-shadow: var(--shadow); }
+    .app-shell { display: grid; grid-template-columns: 145px 1fr; overflow: hidden; min-height: 380px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    .app-side { padding: 20px 14px; background: #2e3853; color: #fff; }
+    .app-side strong { display: block; margin-bottom: 30px; color: #fff; font-size: .82rem; }
+    .app-link { margin: 15px 4px; color: #aab4cc; font-size: .72rem; }
+    .app-link.current { color: #fff; font-weight: 700; }
+    .app-content { padding: 24px; }
+    .app-heading { display: flex; justify-content: space-between; gap: 15px; align-items: start; }
+    .app-heading small { color: var(--muted); font-size: .7rem; }
+    .app-heading h3 { margin-top: 3px; font-size: 1.45rem; }
+    .app-status { padding: 5px 9px; border-radius: 99px; background: #e5fbf4; color: #148b72; font-size: .68rem; font-weight: 750; }
+    .app-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 22px; }
+    .metric { padding: 13px; border: 1px solid var(--line); border-radius: 7px; }
+    .metric span { display: block; color: var(--muted); font-size: .68rem; }
+    .metric b { display: block; margin-top: 3px; font-size: 1.35rem; }
+    .metric em { color: var(--accent); font-size: .7rem; font-style: normal; }
+    .app-chart { height: 125px; display: flex; align-items: end; gap: 7px; margin-top: 12px; padding: 16px 15px 0; border: 1px solid var(--line); border-radius: 7px; }
+    .app-chart .bar { background: #aaa4f7; }
+    .app-chart .bar:nth-child(7) { background: var(--accent); }
+    .activity { display: grid; gap: 8px; margin-top: 12px; }
+    .activity-row { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: .7rem; }
+    .activity-row b { color: var(--ink); font-weight: 650; }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 45px; align-items: stretch; }
+    .price-card { display: flex; flex-direction: column; padding: 27px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .price-card.featured { border: 2px solid var(--brand); box-shadow: var(--shadow); }
+    .price-label { color: var(--brand); font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .price-card h3 { margin-top: 10px; font-size: 1.5rem; }
+    .price-card > p:not(.price-label) { min-height: 50px; margin-top: 9px; color: var(--muted); font-size: .9rem; }
+    .price { margin-top: 20px; font-size: 2.35rem; font-weight: 800; letter-spacing: -.06em; }
+    .price small { color: var(--muted); font-size: .85rem; font-weight: 500; letter-spacing: 0; }
+    .price-card .btn { width: 100%; margin-top: 22px; }
+    .price-list { display: grid; gap: 9px; margin: 22px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); list-style: none; color: var(--muted); font-size: .87rem; }
+    .price-list li::before { margin-right: 8px; color: var(--accent); content: "✓"; font-weight: 800; }
+
+    .sample-note { margin-top: 30px; color: #8b94a9; font-size: .8rem; }
+    .faq-section { background: #eef1ff; }
+    .faq-list { max-width: 780px; margin-top: 38px; border-top: 1px solid #d9def2; }
+    .faq-item { border-bottom: 1px solid #d9def2; }
+    .faq-question { width: 100%; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 1rem; font-weight: 700; text-align: left; cursor: pointer; }
+    .faq-question span:last-child { color: var(--brand); font-size: 1.4rem; font-weight: 400; line-height: 1; }
+    .faq-answer { display: none; padding: 0 40px 20px 0; color: var(--muted); font-size: .92rem; }
+    .faq-item.open .faq-answer { display: block; }
+
+    .final-cta { padding: 90px 0; background: linear-gradient(120deg, #5a4bd1, #7669ee); color: #fff; text-align: center; }
+    .final-cta h2 { max-width: 680px; margin: 0 auto; }
+    .final-cta p:not(.eyebrow) { max-width: 540px; margin: 16px auto 28px; color: #e5e2ff; }
+    .final-cta .eyebrow { color: #c9c4ff; }
+    .final-cta .btn { border-color: #fff; background: #fff; color: var(--brand-dark); }
+    .final-cta .btn:hover { background: #f0efff; }
+    footer { padding: 26px 0; background: #10182c; color: #aeb8cf; font-size: .82rem; }
+    .footer-wrap { display: flex; justify-content: space-between; gap: 20px; }
+    footer a { color: #fff; text-decoration: none; }
+
+    @media (max-width: 850px) {
+      .section { padding: 72px 0; }
+      .nav-toggle { display: block; }
+      nav { position: absolute; top: 76px; left: 20px; right: 20px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+      nav.open { display: flex; }
+      nav a { padding: 12px; }
+      nav .btn { margin-top: 5px; }
+      .hero-grid, .showcase-layout { grid-template-columns: 1fr; gap: 45px; }
+      .hero { padding-top: 72px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .app-shell { min-height: 350px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 32px, 1120px); }
+      .hero-actions .btn { width: 100%; }
+      .dashboard-preview { transform: none; }
+      .preview-body { grid-template-columns: 92px 1fr; }
+      .preview-main { padding: 13px; }
+      .stats { gap: 5px; }
+      .stat { padding: 8px; }
+      .features-grid, .steps-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .steps-grid { gap: 25px; }
+      .app-shell { grid-template-columns: 90px 1fr; }
+      .app-content { padding: 15px; }
+      .app-metrics { gap: 6px; }
+      .footer-wrap { display: block; }
+      footer p + p { margin-top: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav-wrap">
+      <a class="logo" href="#top"><span class="logo-mark">F</span>FlowPilot</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav id="site-nav" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn" href="#start">Try FlowPilot</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">A calmer way to work · Demo project</p>
+          <h1>Plan better. Ship together.</h1>
+          <p class="hero-copy">FlowPilot brings projects, priorities and team progress into one clear workspace, so everyone knows what matters next.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#start">Start for free</a>
+            <a class="btn secondary" href="#showcase">See how it works</a>
+          </div>
+          <p class="hero-note">FlowPilot is a fictional SaaS product created as a frontend demo.</p>
+        </div>
+        <div class="dashboard-preview" aria-label="FlowPilot dashboard preview">
+          <div class="preview-window">
+            <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+            <div class="preview-body">
+              <aside class="preview-side">
+                <strong>FlowPilot</strong>
+                <div class="side-line active"></div><div class="side-line"></div><div class="side-line"></div><div class="side-line"></div><div class="side-line"></div>
+              </aside>
+              <div class="preview-main">
+                <div class="preview-top"><span class="mini-title"></span><span class="mini-button"></span></div>
+                <div class="stats">
+                  <div class="stat"><small>On track</small><b>84%</b></div>
+                  <div class="stat"><small>Tasks done</small><b>128</b></div>
+                  <div class="stat"><small>Focus time</small><b>32h</b></div>
+                </div>
+                <div class="chart"><div class="chart-lines"><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Everything in sync</p>
+          <h2>Less busywork. More meaningful progress.</h2>
+          <p>Simple tools help your team move from scattered updates to a shared view of the work.</p>
+        </div>
+        <div class="features-grid">
+          <article class="feature"><div class="feature-icon">01</div><h3>Clear project plans</h3><p>Turn broad goals into milestones, owners and next steps everyone can follow.</p></article>
+          <article class="feature"><div class="feature-icon">02</div><h3>Smart priorities</h3><p>Keep the most important work visible with focused, flexible task views.</p></article>
+          <article class="feature"><div class="feature-icon">03</div><h3>Team updates</h3><p>Share progress in context without filling your calendar with status meetings.</p></article>
+          <article class="feature"><div class="feature-icon">04</div><h3>Useful insights</h3><p>See momentum, workload and project health through simple visual reports.</p></article>
+          <article class="feature"><div class="feature-icon">05</div><h3>Connected notes</h3><p>Keep decisions, briefs and helpful context close to the work they support.</p></article>
+          <article class="feature"><div class="feature-icon">06</div><h3>Flexible workflows</h3><p>Shape views and routines around how your team already works best.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section steps-section" id="how-it-works">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2>From idea to done in three steps.</h2>
+          <p>FlowPilot keeps the process light, visible and easy to pick up.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step"><span class="step-number">01 / ORGANIZE</span><h3>Bring your work together</h3><p>Start with a project, add the key milestones and give every task a clear home.</p></article>
+          <article class="step"><span class="step-number">02 / ALIGN</span><h3>Make ownership obvious</h3><p>Assign next steps, share context and give teammates a quick view of what needs attention.</p></article>
+          <article class="step"><span class="step-number">03 / MOVE</span><h3>Keep momentum visible</h3><p>Use lightweight updates and progress views to make the next decision easier.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section showcase" id="showcase">
+      <div class="wrap showcase-layout">
+        <div class="showcase-copy">
+          <p class="eyebrow">A view that helps</p>
+          <h2>Your whole project, at a glance.</h2>
+          <p>See what is moving, what needs a nudge and where your team is spending its energy without digging through a dozen tools.</p>
+          <ul class="showcase-list">
+            <li>One shared view for goals and daily work</li>
+            <li>Progress signals that stay easy to understand</li>
+            <li>Updates that keep everyone in the loop</li>
+          </ul>
+        </div>
+        <div class="mock-app" aria-label="FlowPilot analytics dashboard mockup">
+          <div class="app-shell">
+            <aside class="app-side"><strong>FlowPilot</strong><div class="app-link current">Overview</div><div class="app-link">Projects</div><div class="app-link">My tasks</div><div class="app-link">Reports</div><div class="app-link">Settings</div></aside>
+            <div class="app-content">
+              <div class="app-heading"><div><small>Workspace overview</small><h3>Good morning, team</h3></div><span class="app-status">On track</span></div>
+              <div class="app-metrics"><div class="metric"><span>Active projects</span><b>12</b><em>+2 this month</em></div><div class="metric"><span>Tasks completed</span><b>248</b><em>+18% this week</em></div></div>
+              <div class="app-chart"><span class="bar" style="height:35%"></span><span class="bar" style="height:52%"></span><span class="bar" style="height:43%"></span><span class="bar" style="height:68%"></span><span class="bar" style="height:60%"></span><span class="bar" style="height:82%"></span><span class="bar" style="height:92%"></span></div>
+              <div class="activity"><div class="activity-row"><b>Website refresh</b><span>76% complete</span></div><div class="activity-row"><b>Launch planning</b><span>42% complete</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Simple pricing</p>
+          <h2>Choose the space you need.</h2>
+          <p>Start small, then add more room as your projects and team grow.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card"><p class="price-label">For trying it out</p><h3>Free</h3><p>For personal projects and small experiments.</p><div class="price">$0 <small>/ forever</small></div><a class="btn secondary" href="#start">Get started</a><ul class="price-list"><li>Up to 3 projects</li><li>Basic task views</li><li>Personal workspace</li></ul></article>
+          <article class="price-card featured"><p class="price-label">For focused teams</p><h3>Pro</h3><p>For teams that want a clear shared rhythm.</p><div class="price">$12 <small>/ member / month</small></div><a class="btn" href="#start">Choose Pro</a><ul class="price-list"><li>Unlimited projects</li><li>Progress insights</li><li>Shared team workspace</li></ul></article>
+          <article class="price-card"><p class="price-label">For growing teams</p><h3>Business</h3><p>For organizations that need more control.</p><div class="price">$28 <small>/ member / month</small></div><a class="btn secondary" href="#start">Choose Business</a><ul class="price-list"><li>Advanced reporting</li><li>Custom workflows</li><li>Priority workspace support</li></ul></article>
+        </div>
+        <p class="sample-note">Pricing shown is fictional sample content for this frontend demo.</p>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Questions, answered</p>
+          <h2>Small details, made clear.</h2>
+          <p>Here are a few common questions about the fictional FlowPilot product.</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What is FlowPilot?</span><span>+</span></button><div class="faq-answer">FlowPilot is a fictional project workspace concept for organizing goals, tasks and team progress in one place.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Can I try it before choosing a plan?</span><span>+</span></button><div class="faq-answer">Yes. The sample pricing includes a free plan so visitors can explore the core workspace before deciding what they need.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Is FlowPilot built for a specific type of team?</span><span>+</span></button><div class="faq-answer">The fictional product is designed to be flexible for creative, product and operations teams with shared projects.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Does FlowPilot connect to other tools?</span><span>+</span></button><div class="faq-answer">Integrations are not implemented in this demo. A production product could connect calendars, communication tools and development workflows.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Is this a real product?</span><span>+</span></button><div class="faq-answer">No. FlowPilot is a fictional SaaS concept created to demonstrate frontend development skills.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="start">
+      <div class="wrap">
+        <p class="eyebrow">Ready when you are</p>
+        <h2>Give your next project a clearer path.</h2>
+        <p>Start with a focused workspace for the work that matters most.</p>
+        <a class="btn" href="#top">Create a free workspace</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-wrap">
+      <p>© <span id="year">2026</span> FlowPilot.</p>
+      <p>Fictional SaaS demo · <a href="#top">Back to top ↑</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var navToggle = document.querySelector(".nav-toggle");
+      var nav = document.getElementById("site-nav");
+      var navLinks = nav.querySelectorAll("a");
+      var faqQuestions = document.querySelectorAll(".faq-question");
+
+      navToggle.addEventListener("click", function () {
+        var isOpen = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          nav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.setAttribute("aria-label", "Open menu");
+        });
+      });
+
+      faqQuestions.forEach(function (question) {
+        question.addEventListener("click", function () {
+          var item = question.parentElement;
+          var isOpen = item.classList.toggle("open");
+          question.setAttribute("aria-expanded", String(isOpen));
+          question.lastElementChild.textContent = isOpen ? "−" : "+";
+        });
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    }());
+  </script>
+</body>
+</html>
