@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ember & Thyme is a fictional neighborhood restaurant serving seasonal plates, warm hospitality and thoughtfully sourced ingredients.">
+  <title>Ember &amp; Thyme | Seasonal Neighborhood Dining</title>
+  <style>
+    :root {
+      --ink: #29231f;
+      --muted: #756a61;
+      --paper: #fbf8f2;
+      --cream: #f1e9dc;
+      --card: #fffdf9;
+      --terracotta: #b65336;
+      --terracotta-dark: #873b28;
+      --sage: #546052;
+      --line: #dfd5c8;
+      --shadow: 0 18px 48px rgba(54, 38, 26, .1);
+      --display: Georgia, "Times New Roman", serif;
+      --body: "Trebuchet MS", Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.65 var(--body); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid #d58b55; outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 10px; color: var(--terracotta); font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; line-height: 1.1; }
+    h1 { font-size: clamp(3.3rem, 8vw, 6.5rem); letter-spacing: -.045em; }
+    h2 { font-size: clamp(2.25rem, 5vw, 3.8rem); letter-spacing: -.035em; }
+    h3 { font-size: 1.45rem; }
+    p { margin: 0; }
+    .section { padding: 100px 0; }
+    .section-heading { max-width: 620px; }
+    .section-heading p:not(.eyebrow) { margin-top: 16px; color: var(--muted); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 11px 20px; border: 1px solid var(--terracotta); border-radius: 3px; background: var(--terracotta); color: #fff; font: inherit; font-weight: 700; text-decoration: none; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+    .btn:hover { border-color: var(--terracotta-dark); background: var(--terracotta-dark); transform: translateY(-2px); }
+    .btn-light { border-color: rgba(255,255,255,.7); background: transparent; }
+    .btn-light:hover { border-color: #fff; background: rgba(255,255,255,.14); }
+
+    header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(223,213,200,.8); background: rgba(251,248,242,.94); backdrop-filter: blur(12px); }
+    .nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 78px; gap: 24px; }
+    .brand { color: var(--ink); font-family: var(--display); font-size: 1.45rem; text-decoration: none; }
+    .brand span { color: var(--terracotta); }
+    .nav-toggle { display: none; border: 0; background: transparent; color: var(--ink); cursor: pointer; padding: 8px; }
+    .nav-toggle svg { width: 25px; height: 25px; }
+    nav { display: flex; align-items: center; gap: 26px; }
+    nav a { color: var(--muted); font-size: .92rem; text-decoration: none; transition: color .2s ease; }
+    nav a:hover { color: var(--terracotta); }
+    nav .btn { color: #fff; font-size: .9rem; }
+
+    .hero { min-height: min(720px, calc(100vh - 78px)); display: grid; align-items: center; background: linear-gradient(105deg, rgba(40,31,24,.86), rgba(40,31,24,.32)), radial-gradient(circle at 80% 20%, #c78050, #674332 42%, #28221e 78%); color: #fff; }
+    .hero-content { max-width: 720px; padding: 110px 0; }
+    .hero .eyebrow { color: #e9b187; }
+    .hero h1 { max-width: 760px; }
+    .hero-copy { max-width: 570px; margin: 25px 0 32px; color: #f5eade; font-size: 1.15rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-note { margin-top: 52px; color: #ead9c7; font-size: .88rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 80px; align-items: center; }
+    .about-copy { max-width: 570px; }
+    .about-copy > p:not(.eyebrow) { margin-top: 22px; color: var(--muted); }
+    .about-copy > p + p { margin-top: 14px; }
+    .about-card { position: relative; min-height: 420px; display: grid; place-items: center; padding: 35px; background: var(--cream); overflow: hidden; }
+    .about-card::before, .about-card::after { position: absolute; border: 1px solid rgba(180,83,54,.3); border-radius: 50%; content: ""; }
+    .about-card::before { width: 330px; height: 330px; }
+    .about-card::after { width: 230px; height: 230px; }
+    .about-card-inner { position: relative; z-index: 1; width: 190px; height: 190px; display: grid; place-items: center; border-radius: 50%; background: var(--terracotta); color: #fff; text-align: center; box-shadow: var(--shadow); }
+    .about-card-inner strong { display: block; font-family: var(--display); font-size: 2rem; line-height: 1; }
+    .about-card-inner span { display: block; margin-top: 7px; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+
+    .menu-section { background: var(--cream); }
+    .menu-head { display: flex; justify-content: space-between; align-items: end; gap: 25px; }
+    .menu-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+    .menu-tab { border: 1px solid var(--line); border-radius: 99px; padding: 9px 16px; background: transparent; color: var(--muted); font: inherit; cursor: pointer; transition: .2s ease; }
+    .menu-tab:hover, .menu-tab.active { border-color: var(--terracotta); background: var(--terracotta); color: #fff; }
+    .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 42px; }
+    .dish { display: flex; flex-direction: column; min-height: 290px; padding: 26px; border: 1px solid var(--line); background: var(--card); transition: transform .2s ease, box-shadow .2s ease; }
+    .dish:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .dish-visual { display: grid; place-items: center; min-height: 92px; margin: -26px -26px 24px; background: linear-gradient(135deg, #d49a68, #98502f); color: rgba(255,255,255,.8); font-family: var(--display); font-size: 2.2rem; }
+    .dish:nth-child(2) .dish-visual { background: linear-gradient(135deg, #71806a, #374a3b); }
+    .dish:nth-child(3) .dish-visual { background: linear-gradient(135deg, #d2ad61, #a96732); }
+    .dish:nth-child(4) .dish-visual { background: linear-gradient(135deg, #b87868, #713d37); }
+    .dish:nth-child(5) .dish-visual { background: linear-gradient(135deg, #8c9e71, #4c604a); }
+    .dish:nth-child(6) .dish-visual { background: linear-gradient(135deg, #ae8363, #5c4033); }
+    .dish h3 { display: flex; justify-content: space-between; gap: 12px; font-size: 1.3rem; }
+    .dish-price { color: var(--terracotta); font-family: var(--body); font-size: 1rem; font-weight: 700; white-space: nowrap; }
+    .dish p { margin-top: 10px; color: var(--muted); font-size: .92rem; }
+    .dish-tags { margin-top: auto; padding-top: 20px; color: var(--sage); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+    .featured-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: stretch; }
+    .feature-card { min-height: 380px; display: flex; flex-direction: column; justify-content: end; padding: 34px; background: linear-gradient(145deg, rgba(55,39,29,.15), rgba(55,39,29,.92)), linear-gradient(135deg, #d29a6d, #5e3b2e); color: #fff; }
+    .feature-card h3 { font-size: 2.2rem; }
+    .feature-card p { max-width: 470px; margin-top: 12px; color: #f5eade; }
+    .feature-card .eyebrow { color: #e9b187; }
+    .feature-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; padding: 32px; background: var(--sage); color: #fff; }
+    .feature-list h3 { font-size: 1.7rem; }
+    .feature-list p { margin-top: 10px; color: #e1e9dc; font-size: .92rem; }
+
+    .details { background: var(--ink); color: #fff; }
+    .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .detail { padding: 25px 0; border-top: 1px solid rgba(255,255,255,.24); }
+    .detail h3 { color: #e9b187; font-size: 1.25rem; }
+    .detail p { margin-top: 12px; color: #e4d8cc; }
+    .detail a { color: #fff; text-decoration-color: rgba(255,255,255,.45); text-underline-offset: 4px; }
+
+    .contact { padding: 88px 0; background: var(--terracotta); color: #fff; text-align: center; }
+    .contact h2 { max-width: 650px; margin: 0 auto; }
+    .contact p:not(.eyebrow) { max-width: 530px; margin: 18px auto 28px; color: #f9e8da; }
+    footer { padding: 25px 0; background: #211c19; color: #cdbfb2; font-size: .85rem; }
+    .footer-wrap { display: flex; justify-content: space-between; gap: 18px; }
+    footer a { color: #fff; text-decoration: none; }
+
+    @media (max-width: 800px) {
+      .section { padding: 72px 0; }
+      .nav-toggle { display: block; }
+      nav { position: absolute; top: 78px; left: 20px; right: 20px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 10px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
+      nav.open { display: flex; }
+      nav a { padding: 12px; }
+      nav .btn { margin-top: 5px; }
+      .about-grid, .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+      .menu-head { display: block; }
+      .menu-tabs { margin-top: 25px; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .details-grid { grid-template-columns: 1fr; gap: 0; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 32px, 1120px); }
+      .hero-content { padding: 85px 0; }
+      .hero-actions .btn { width: 100%; }
+      .about-card { min-height: 310px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .feature-list { grid-template-columns: 1fr; }
+      .footer-wrap { display: block; }
+      footer p + p { margin-top: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav-wrap">
+      <a class="brand" href="#top" aria-label="Ember and Thyme home">Ember <span>&amp;</span> Thyme</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav id="site-nav" aria-label="Main navigation">
+        <a href="#about">Our story</a>
+        <a href="#menu">Menu</a>
+        <a href="#visit">Visit us</a>
+        <a class="btn" href="#reserve">Reserve a table</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-content">
+        <p class="eyebrow">A neighborhood table · Demo project</p>
+        <h1>Good food.<br>Good company.</h1>
+        <p class="hero-copy">Seasonal cooking, warm light and a seat waiting for you. Ember &amp; Thyme brings thoughtful plates and easy-going hospitality to the heart of the neighborhood.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#menu">Explore our menu</a>
+          <a class="btn btn-light" href="#reserve">Plan your visit</a>
+        </div>
+        <p class="hero-note">This is a fictional restaurant website created as a frontend demo.</p>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap about-grid">
+        <div class="about-copy">
+          <p class="eyebrow">Gather around</p>
+          <h2>Food with a little fire in it.</h2>
+          <p>At Ember &amp; Thyme, we keep things simple: cook with care, source with intention and make every guest feel at home. Our menu follows the seasons, pairing familiar comfort with unexpected little details.</p>
+          <p>Come for a long lunch, a quick glass of wine or a dinner that turns into one more round. There is always room at our table.</p>
+        </div>
+        <div class="about-card" aria-label="Ember and Thyme established 2024">
+          <div class="about-card-inner"><div><strong>ET</strong><span>made for sharing</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="wrap">
+        <div class="menu-head">
+          <div class="section-heading">
+            <p class="eyebrow">From the kitchen</p>
+            <h2>A menu worth lingering over.</h2>
+            <p>Thoughtful ingredients, generous portions and something for every kind of appetite.</p>
+          </div>
+          <div class="menu-tabs" role="tablist" aria-label="Menu categories">
+            <button class="menu-tab active" type="button" data-category="all" role="tab" aria-selected="true">All day</button>
+            <button class="menu-tab" type="button" data-category="small" role="tab" aria-selected="false">Small plates</button>
+            <button class="menu-tab" type="button" data-category="mains" role="tab" aria-selected="false">Mains</button>
+          </div>
+        </div>
+        <div class="menu-grid">
+          <article class="dish" data-category="small">
+            <div class="dish-visual" aria-hidden="true">01</div>
+            <h3>Charred carrots <span class="dish-price">$12</span></h3>
+            <p>Whipped feta, toasted hazelnut, garden herbs and a bright citrus dressing.</p>
+            <div class="dish-tags">Small plate · Vegetarian</div>
+          </article>
+          <article class="dish" data-category="small">
+            <div class="dish-visual" aria-hidden="true">02</div>
+            <h3>House sourdough <span class="dish-price">$8</span></h3>
+            <p>Warm slices, cultured butter and smoked sea salt, baked fresh each morning.</p>
+            <div class="dish-tags">To share · Fresh baked</div>
+          </article>
+          <article class="dish" data-category="mains">
+            <div class="dish-visual" aria-hidden="true">03</div>
+            <h3>Thyme roast chicken <span class="dish-price">$24</span></h3>
+            <p>Golden roast chicken, spring greens, crispy potatoes and pan jus.</p>
+            <div class="dish-tags">Main · House favorite</div>
+          </article>
+          <article class="dish" data-category="mains">
+            <div class="dish-visual" aria-hidden="true">04</div>
+            <h3>Ember rigatoni <span class="dish-price">$19</span></h3>
+            <p>Slow-roasted tomato, chili, basil and aged pecorino tossed with fresh pasta.</p>
+            <div class="dish-tags">Main · Vegetarian</div>
+          </article>
+          <article class="dish" data-category="small">
+            <div class="dish-visual" aria-hidden="true">05</div>
+            <h3>Green bean salad <span class="dish-price">$11</span></h3>
+            <p>Blistered beans, pickled shallot, almonds and a lemon-mustard vinaigrette.</p>
+            <div class="dish-tags">Small plate · Vegan</div>
+          </article>
+          <article class="dish" data-category="mains">
+            <div class="dish-visual" aria-hidden="true">06</div>
+            <h3>Olive oil cake <span class="dish-price">$10</span></h3>
+            <p>Soft citrus cake, roasted stone fruit and a spoon of vanilla cream.</p>
+            <div class="dish-tags">Dessert · Sweet finish</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="featured">
+      <div class="wrap featured-grid">
+        <div class="feature-card">
+          <p class="eyebrow">Featured this week</p>
+          <h3>Wood-fired market vegetables</h3>
+          <p>Our kitchen team lets the best produce of the week lead the way, finished with herb oil and a warm sourdough crumb.</p>
+        </div>
+        <div class="feature-list">
+          <div>
+            <h3>Made nearby</h3>
+            <p>We choose ingredients from independent growers and makers whenever the season allows.</p>
+          </div>
+          <div>
+            <h3>Made to share</h3>
+            <p>Order for the table, pass a plate and stay for dessert. That is the spirit of Ember &amp; Thyme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details" id="visit">
+      <div class="wrap details-grid">
+        <div class="detail">
+          <h3>Opening hours</h3>
+          <p>Tuesday – Thursday<br>12:00 pm – 10:00 pm</p>
+          <p>Friday – Saturday<br>12:00 pm – 11:00 pm</p>
+          <p>Sunday<br>10:00 am – 4:00 pm</p>
+        </div>
+        <div class="detail">
+          <h3>Find us</h3>
+          <p>18 Juniper Lane<br>Riverside Quarter<br>Portland, OR 97205</p>
+          <p><a href="#reserve">Get directions →</a></p>
+        </div>
+        <div class="detail">
+          <h3>Say hello</h3>
+          <p><a href="tel:+15035550184">(503) 555-0184</a><br><a href="mailto:hello@emberandthyme.example">hello@emberandthyme.example</a></p>
+          <p>Walk-ins welcome. Reservations recommended for dinner.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="reserve">
+      <div class="wrap">
+        <p class="eyebrow">Save your seat</p>
+        <h2>Make an evening of it.</h2>
+        <p>For this demo, the reservation button is a placeholder. A real restaurant could connect it to a booking service or reservation form.</p>
+        <a class="btn btn-light" href="mailto:hello@emberandthyme.example?subject=Table%20reservation">Request a reservation</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-wrap">
+      <p>© <span id="year">2026</span> Ember &amp; Thyme.</p>
+      <p>Fictional restaurant · <a href="#top">Back to top ↑</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var navToggle = document.querySelector(".nav-toggle");
+      var nav = document.getElementById("site-nav");
+      var navLinks = nav.querySelectorAll("a");
+      var tabs = document.querySelectorAll(".menu-tab");
+      var dishes = document.querySelectorAll(".dish");
+
+      navToggle.addEventListener("click", function () {
+        var isOpen = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          nav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.setAttribute("aria-label", "Open menu");
+        });
+      });
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var category = tab.getAttribute("data-category");
+          tabs.forEach(function (item) {
+            item.classList.toggle("active", item === tab);
+            item.setAttribute("aria-selected", String(item === tab));
+          });
+          dishes.forEach(function (dish) {
+            dish.hidden = category !== "all" && dish.getAttribute("data-category") !== category;
+          });
+        });
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    }());
+  </script>
+</body>
+</html>
