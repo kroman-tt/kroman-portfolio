@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Northstar Strength is a fictional local gym offering coaching, group training and a welcoming place to build lasting strength.">
+  <title>Northstar Strength | Find Your Strong</title>
+  <style>
+    :root {
+      --ink:#17211f; --muted:#64716d; --paper:#f5f7f3; --surface:#fff;
+      --dark:#17211f; --lime:#c8f04a; --lime-dark:#a8d52d; --line:#dce4dc;
+      --orange:#e67842; --display:Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --body:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --shadow:0 18px 45px rgba(23,33,31,.11);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:76px}
+    body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--body)}
+    a{color:inherit} button,a{-webkit-tap-highlight-color:transparent}
+    :focus-visible{outline:3px solid var(--lime);outline-offset:4px}
+    .wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
+    .eyebrow{margin:0 0 11px;color:var(--orange);font-size:.76rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    h1,h2,h3{margin:0;font-family:var(--display);font-weight:400;line-height:1;letter-spacing:.015em;text-transform:uppercase}
+    h1{max-width:720px;font-size:clamp(3.25rem,8vw,6.9rem)}
+    h2{font-size:clamp(2.35rem,5vw,4.2rem)}
+    h3{font-size:1.55rem} p{margin:0}
+    .section{padding:100px 0}.section-head{max-width:630px}
+    .section-head>p:not(.eyebrow){margin-top:16px;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 20px;border:1px solid var(--lime);border-radius:3px;background:var(--lime);color:var(--dark);font:inherit;font-weight:800;text-decoration:none;transition:.2s ease}
+    .btn:hover{background:var(--lime-dark);border-color:var(--lime-dark);transform:translateY(-2px)}
+    .btn.dark{border-color:var(--dark);background:var(--dark);color:#fff}
+    .btn.dark:hover{background:#2b3935;border-color:#2b3935}
+    .btn.outline{border-color:var(--line);background:transparent;color:var(--ink)}
+    .btn.outline:hover{border-color:var(--dark);background:var(--dark);color:#fff}
+
+    header{position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(220,228,220,.8);background:rgba(245,247,243,.95);backdrop-filter:blur(12px)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;min-height:76px;gap:24px}
+    .logo{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:900;letter-spacing:-.04em;text-decoration:none}
+    .logo-mark{width:29px;height:29px;display:grid;place-items:center;background:var(--lime);font-family:var(--display);font-size:1.25rem}
+    .nav-toggle{display:none;border:0;background:transparent;color:var(--ink);cursor:pointer;padding:7px}
+    .nav-toggle svg{width:25px;height:25px}
+    nav{display:flex;align-items:center;gap:27px}
+    nav a{color:var(--muted);font-size:.9rem;text-decoration:none;transition:color .2s ease}
+    nav a:hover{color:var(--orange)} nav .btn{color:var(--dark);font-size:.88rem}
+
+    .hero{min-height:min(720px,calc(100vh - 76px));display:grid;align-items:center;background:linear-gradient(90deg,rgba(17,26,24,.92),rgba(17,26,24,.55)),radial-gradient(circle at 82% 30%,#708263,#25352d 58%,#131d1b);color:#fff}
+    .hero-content{padding:105px 0}.hero .eyebrow{color:var(--lime)}
+    .hero-copy{max-width:550px;margin:25px 0 31px;color:#d6dfd7;font-size:1.13rem}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:11px}.hero .btn.outline{border-color:rgba(255,255,255,.55);color:#fff}
+    .hero .btn.outline:hover{border-color:#fff;background:#fff;color:var(--dark)}
+    .demo-note{margin-top:46px;color:#b5c2b9;font-size:.8rem}
+
+    .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:75px;align-items:center}
+    .about-copy>p:not(.eyebrow){margin-top:21px;color:var(--muted)}
+    .about-copy>p+p{margin-top:13px}
+    .about-panel{padding:30px;background:var(--dark);color:#fff;box-shadow:var(--shadow)}
+    .about-panel-top{display:flex;justify-content:space-between;gap:15px;align-items:start;padding-bottom:24px;border-bottom:1px solid #3b4944}
+    .about-panel h3{font-size:2rem}.panel-badge{padding:5px 9px;background:var(--lime);color:var(--dark);font-size:.68rem;font-weight:800}
+    .about-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:25px}
+    .about-stat b{display:block;color:var(--lime);font-family:var(--display);font-size:2rem}
+    .about-stat span{color:#bac7bf;font-size:.75rem}
+
+    .dark-section{background:var(--dark);color:#fff}.dark-section .section-head>p:not(.eyebrow){color:#b9c6be}
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}
+    .plan{display:flex;flex-direction:column;padding:28px;border:1px solid #3b4944;background:#202d29}
+    .plan.featured{border:2px solid var(--lime);background:#29372f}
+    .plan-label{color:var(--lime);font-size:.74rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .plan h3{margin-top:12px}.plan p:not(.plan-label){min-height:53px;margin-top:11px;color:#b9c6be;font-size:.9rem}
+    .price{margin-top:20px;font-family:var(--display);font-size:2.6rem}.price small{color:#b9c6be;font:400 .8rem var(--body);letter-spacing:0}
+    .plan .btn{width:100%;margin-top:23px}.plan ul{display:grid;gap:9px;margin:22px 0 0;padding:20px 0 0;border-top:1px solid #3b4944;list-style:none;color:#c6d0c9;font-size:.86rem}
+    .plan li::before{margin-right:8px;color:var(--lime);content:"✓";font-weight:800}
+
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}
+    .service{padding:27px;border:1px solid var(--line);background:var(--surface);transition:.2s ease}
+    .service:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+    .service-icon{width:45px;height:45px;display:grid;place-items:center;margin-bottom:21px;background:#edf6ce;color:var(--dark);font-family:var(--display);font-size:1.35rem}
+    .service p{margin-top:10px;color:var(--muted);font-size:.91rem}
+    .service a{display:inline-block;margin-top:20px;color:var(--orange);font-size:.84rem;font-weight:800;text-decoration:none}
+
+    .trainers{background:#e9eee7}.trainer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}
+    .trainer{overflow:hidden;background:var(--surface);transition:.2s ease}.trainer:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+    .trainer-visual{min-height:190px;display:grid;place-items:center;background:linear-gradient(135deg,#b7ca9b,#536b58);color:rgba(255,255,255,.8);font-family:var(--display);font-size:4rem}
+    .trainer:nth-child(2) .trainer-visual{background:linear-gradient(135deg,#e5ae72,#9a5439)}
+    .trainer:nth-child(3) .trainer-visual{background:linear-gradient(135deg,#8eaab0,#435e66)}
+    .trainer-info{padding:22px}.trainer-info p{margin-top:6px;color:var(--orange);font-size:.82rem;font-weight:800}
+    .trainer-info small{display:block;margin-top:12px;color:var(--muted);font-size:.86rem}
+
+    .benefit-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+    .benefit-list{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:32px}
+    .benefit{padding-top:16px;border-top:2px solid var(--lime)}.benefit b{display:block;font-size:1.03rem}.benefit p{margin-top:7px;color:var(--muted);font-size:.88rem}
+    .quote-card{padding:35px;background:var(--orange);color:#fff}.quote-card blockquote{margin:0;font-family:var(--display);font-size:2rem;line-height:1.12;text-transform:uppercase}.quote-card p{margin-top:25px;color:#ffe6d8;font-size:.86rem}
+
+    .schedule{background:var(--paper)}.schedule-table{margin-top:40px;border-top:1px solid var(--line)}
+    .schedule-row{display:grid;grid-template-columns:1fr 2fr 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+    .schedule-row span:first-child{color:var(--orange);font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.schedule-row b{font-size:1.05rem}.schedule-row span:last-child{color:var(--muted);font-size:.87rem;text-align:right}
+
+    .faq-section{background:#e9eee7}.faq-list{max-width:790px;margin-top:40px;border-top:1px solid #ccd8cc}
+    .faq-item{border-bottom:1px solid #ccd8cc}.faq-question{width:100%;display:flex;justify-content:space-between;gap:20px;padding:20px 0;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:800;text-align:left;cursor:pointer}
+    .faq-question span:last-child{color:var(--orange);font-size:1.4rem;font-weight:400;line-height:1}.faq-answer{display:none;padding:0 42px 20px 0;color:var(--muted);font-size:.91rem}.faq-item.open .faq-answer{display:block}
+
+    .contact{padding:88px 0;background:var(--lime);color:var(--dark)}.contact-grid{display:flex;justify-content:space-between;gap:35px;align-items:end}
+    .contact h2{max-width:650px}.contact-copy{max-width:510px;margin-top:16px;color:#3e4c35}.contact-details{display:grid;gap:6px;min-width:230px;font-size:.9rem}.contact-details a{text-decoration-color:rgba(23,33,31,.4);text-underline-offset:4px}
+    footer{padding:26px 0;background:#101715;color:#aebdb2;font-size:.82rem}.footer-wrap{display:flex;justify-content:space-between;gap:20px}footer a{color:#fff;text-decoration:none}
+
+    @media(max-width:850px){
+      .section{padding:72px 0}.nav-toggle{display:block}
+      nav{position:absolute;top:76px;left:20px;right:20px;display:none;flex-direction:column;align-items:stretch;gap:0;padding:10px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow)}
+      nav.open{display:flex}nav a{padding:12px}nav .btn{margin-top:5px}
+      .about-grid,.benefit-grid{grid-template-columns:1fr;gap:42px}.plans,.services-grid,.trainer-grid{grid-template-columns:repeat(2,1fr)}
+      .contact-grid{display:block}.contact-details{margin-top:28px}
+    }
+    @media(max-width:540px){
+      .wrap{width:min(100% - 32px,1120px)}.hero-content{padding:85px 0}.hero-actions .btn{width:100%}
+      .about-stat-grid{gap:8px}.about-panel{padding:23px}.plans,.services-grid,.trainer-grid{grid-template-columns:1fr}
+      .benefit-list{grid-template-columns:1fr;gap:18px}.schedule-row{grid-template-columns:1fr;gap:4px}.schedule-row span:last-child{text-align:left}
+      .footer-wrap{display:block}footer p+p{margin-top:8px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav-wrap">
+      <a class="logo" href="#top"><span class="logo-mark">N</span>Northstar Strength</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav id="site-nav" aria-label="Main navigation">
+        <a href="#about">About</a><a href="#training">Training</a><a href="#plans">Membership</a><a href="#faq">FAQ</a><a class="btn" href="#contact">Start your journey</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-content">
+        <p class="eyebrow">A fictional local gym · Demo project</p>
+        <h1>Find your strong.</h1>
+        <p class="hero-copy">Northstar Strength is a welcoming training space for people who want to move with more confidence, build useful strength and enjoy the process.</p>
+        <div class="hero-actions"><a class="btn" href="#plans">Explore membership</a><a class="btn outline" href="#training">See our training</a></div>
+        <p class="demo-note">This is a fictional gym website created to demonstrate frontend development skills.</p>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap about-grid">
+        <div class="about-copy"><p class="eyebrow">More than a workout</p><h2>Train with purpose. Leave feeling capable.</h2><p>Northstar Strength brings thoughtful coaching, quality equipment and a friendly atmosphere together under one roof. Whether you are learning the basics or refining your routine, every session has a clear purpose.</p><p>Our fictional gym is designed around sustainable progress, not pressure. Show up as you are, find your rhythm and keep moving forward.</p></div>
+        <div class="about-panel"><div class="about-panel-top"><h3>The Northstar approach</h3><span class="panel-badge">DEMO</span></div><div class="about-stat-grid"><div class="about-stat"><b>01</b><span>Move well</span></div><div class="about-stat"><b>02</b><span>Build steadily</span></div><div class="about-stat"><b>03</b><span>Stay curious</span></div></div></div>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="plans">
+      <div class="wrap"><div class="section-head"><p class="eyebrow">Membership</p><h2>Make space for your goals.</h2><p>Flexible fictional plans for different ways to train. No pressure, just a clear place to begin.</p></div>
+        <div class="plans">
+          <article class="plan"><p class="plan-label">A focused start</p><h3>Essential</h3><p>For independent training and a simple weekly rhythm.</p><div class="price">$39 <small>/ month</small></div><a class="btn" href="#contact">Choose Essential</a><ul><li>Open gym access</li><li>Intro orientation</li><li>Locker room access</li></ul></article>
+          <article class="plan featured"><p class="plan-label">Most flexible</p><h3>Momentum</h3><p>For members who want training variety and coaching support.</p><div class="price">$69 <small>/ month</small></div><a class="btn" href="#contact">Choose Momentum</a><ul><li>Everything in Essential</li><li>Unlimited group classes</li><li>Monthly coaching check-in</li></ul></article>
+          <article class="plan"><p class="plan-label">More accountability</p><h3>Northstar</h3><p>For focused goals with a more personal training plan.</p><div class="price">$129 <small>/ month</small></div><a class="btn" href="#contact">Choose Northstar</a><ul><li>Everything in Momentum</li><li>Two personal sessions</li><li>Custom training roadmap</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="training">
+      <div class="wrap"><div class="section-head"><p class="eyebrow">Training &amp; services</p><h2>Choose how you want to move.</h2><p>Different goals need different tools. Explore a few of the sessions available in this fictional gym concept.</p></div>
+        <div class="services-grid">
+          <article class="service"><div class="service-icon">01</div><h3>Strength foundations</h3><p>Learn the fundamentals of lifting with clear instruction, useful progressions and plenty of practice.</p><a href="#contact">Learn more →</a></article>
+          <article class="service"><div class="service-icon">02</div><h3>Small group training</h3><p>Structured sessions with a small group, a shared focus and coaching that meets you where you are.</p><a href="#contact">Learn more →</a></article>
+          <article class="service"><div class="service-icon">03</div><h3>Personal coaching</h3><p>Work one-on-one toward a specific goal with a plan built around your schedule and experience.</p><a href="#contact">Learn more →</a></article>
+          <article class="service"><div class="service-icon">04</div><h3>Mobility sessions</h3><p>Make room for better movement with guided work for control, range and everyday confidence.</p><a href="#contact">Learn more →</a></article>
+          <article class="service"><div class="service-icon">05</div><h3>Conditioning circuit</h3><p>Build stamina with practical, scalable circuits that keep the session challenging and fresh.</p><a href="#contact">Learn more →</a></article>
+          <article class="service"><div class="service-icon">06</div><h3>Open gym</h3><p>Use quality equipment in a calm, well-organized space with help available when you need it.</p><a href="#contact">Learn more →</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section trainers" id="coaches">
+      <div class="wrap"><div class="section-head"><p class="eyebrow">Meet the coaching team</p><h2>Good coaching starts with listening.</h2><p>These fictional trainer profiles show how a local business can introduce its people and approach.</p></div>
+        <div class="trainer-grid">
+          <article class="trainer"><div class="trainer-visual" aria-hidden="true">AR</div><div class="trainer-info"><h3>Avery Reed</h3><p>Strength coach</p><small>Enjoys making the first step feel simple and helping members build confidence with the basics.</small></div></article>
+          <article class="trainer"><div class="trainer-visual" aria-hidden="true">JM</div><div class="trainer-info"><h3>Jordan Miles</h3><p>Movement coach</p><small>Brings a patient, practical approach to mobility, conditioning and everyday movement.</small></div></article>
+          <article class="trainer"><div class="trainer-visual" aria-hidden="true">SK</div><div class="trainer-info"><h3>Sam Kim</h3><p>Personal coach</p><small>Builds clear training plans around real schedules, changing goals and sustainable routines.</small></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="benefits">
+      <div class="wrap benefit-grid">
+        <div><div class="section-head"><p class="eyebrow">Why Northstar</p><h2>A better place to keep showing up.</h2><p>Thoughtful details make a training space easier to return to. That is the experience this fictional brand is built around.</p></div><div class="benefit-list"><div class="benefit"><b>Welcoming by design</b><p>Clear guidance and a low-pressure atmosphere for every starting point.</p></div><div class="benefit"><b>Quality equipment</b><p>A focused selection of tools for strength, movement and conditioning.</p></div><div class="benefit"><b>Clean and calm</b><p>A well-kept space where you can concentrate on the session.</p></div><div class="benefit"><b>Progress that lasts</b><p>Plans and coaching that value consistency over quick fixes.</p></div></div></div>
+        <div class="quote-card"><blockquote>“Strong is not a look. It is a feeling you build.”</blockquote><p>— Northstar Strength, fictional brand principle</p></div>
+      </div>
+    </section>
+
+    <section class="section schedule" id="schedule">
+      <div class="wrap"><div class="section-head"><p class="eyebrow">Sample schedule</p><h2>Find a session that fits.</h2><p>A sample weekly timetable for this demo gym website. Class availability and times are fictional.</p></div>
+        <div class="schedule-table">
+          <div class="schedule-row"><span>Mon / Wed</span><b>Strength foundations</b><span>6:30 am · 6:00 pm</span></div>
+          <div class="schedule-row"><span>Tue / Thu</span><b>Small group training</b><span>7:00 am · 5:30 pm</span></div>
+          <div class="schedule-row"><span>Friday</span><b>Conditioning circuit</b><span>6:00 am · 12:00 pm</span></div>
+          <div class="schedule-row"><span>Saturday</span><b>Mobility &amp; movement</b><span>9:00 am</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="wrap"><div class="section-head"><p class="eyebrow">Questions</p><h2>Before you walk through the door.</h2><p>Common questions for the fictional Northstar Strength gym.</p></div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Do I need gym experience to join?</span><span>+</span></button><div class="faq-answer">No. The fictional gym is designed to welcome beginners as well as experienced members, with an orientation to help you get started.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Can I try a class before choosing a plan?</span><span>+</span></button><div class="faq-answer">This demo presents a trial-class option as a possible real-world feature. A production site could connect this button to a booking form.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>What should I bring?</span><span>+</span></button><div class="faq-answer">Comfortable training clothes, water and a little curiosity are a good start. The fictional gym provides the equipment.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Do you offer personal coaching?</span><span>+</span></button><div class="faq-answer">Yes, personal coaching is included as a sample service. A real gym could use the contact form to match visitors with a coach.</div></div>
+          <div class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Is Northstar Strength a real gym?</span><span>+</span></button><div class="faq-answer">No. Northstar Strength is a fictional local-business concept created to demonstrate frontend development skills.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact-grid"><div><p class="eyebrow">Take the first step</p><h2>Ready to find your strong?</h2><p class="contact-copy">This demo CTA could connect to a real gym’s inquiry form, booking system or phone line.</p><a class="btn dark" href="mailto:hello@northstarstrength.example?subject=Membership%20enquiry">Ask about membership</a></div><div class="contact-details"><strong>Northstar Strength</strong><span>42 Cedar Avenue, Portland</span><a href="tel:+15035550184">(503) 555-0184</a><a href="mailto:hello@northstarstrength.example">hello@northstarstrength.example</a></div></div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-wrap"><p>© <span id="year">2026</span> Northstar Strength.</p><p>Fictional gym demo · <a href="#top">Back to top ↑</a></p></div></footer>
+
+  <script>
+    (function () {
+      var navToggle = document.querySelector(".nav-toggle");
+      var nav = document.getElementById("site-nav");
+      var navLinks = nav.querySelectorAll("a");
+      var questions = document.querySelectorAll(".faq-question");
+      navToggle.addEventListener("click", function () {
+        var open = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(open));
+        navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      });
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          nav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.setAttribute("aria-label", "Open menu");
+        });
+      });
+      questions.forEach(function (question) {
+        question.addEventListener("click", function () {
+          var item = question.parentElement;
+          var open = item.classList.toggle("open");
+          question.setAttribute("aria-expanded", String(open));
+          question.lastElementChild.textContent = open ? "−" : "+";
+        });
+      });
+      document.getElementById("year").textContent = new Date().getFullYear();
+    }());
+  </script>
+</body>
+</html>
